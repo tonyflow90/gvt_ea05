@@ -4,8 +4,7 @@ import * as mat4 from 'gl-matrix/esm/mat4.js';
 import { VertexShader } from './shader/VertexShader.js';
 import { FragmentShader } from './shader/FragmentShader.js';
 
-import { Cone } from './shapes/Cone.js';
-import { Sphere } from './shapes/Sphere.js';
+import RecursiveSphere from './shapes/RecursiveSphere.js';
 
 let App = (function () {
 
@@ -64,7 +63,7 @@ let App = (function () {
     function initWebGL() {
         // Get canvas and WebGL context.
         // canvas = document.getElementById('canvas1');
-        let canvas = document.querySelector('#canvas1');
+        let canvas = document.querySelector('#canvas2');
         gl = canvas.getContext('webgl');
         gl.viewportWidth = canvas.width;
         gl.viewportHeight = canvas.height;
@@ -142,9 +141,7 @@ let App = (function () {
     function initModels() {
         // fill-style
         let fs = "fillwireframe";
-        // createModel(Torus, fs);
-        createModel(Cone, fs);
-        createModel(Sphere, fs);
+        createModel(RecursiveSphere.createShape(1), fs);
     }
 
     /**
@@ -212,36 +209,19 @@ let App = (function () {
 
     function initEventHandler() {
 
-        var deltaRotate = Math.PI / 36;
+        let slider = document.querySelector('#tessellationSlider');
 
+        slider.onchange = (evt) => {
+            let tesNumber = parseInt(evt.target.value);
 
-        window.onkeydown = function (evt) {
-            let key = evt.which ? evt.which : evt.keyCode;
-            let c = String.fromCharCode(key);
-
-            // Change projection of scene.
-            switch (c) {
-                case ('W'):
-                    // Orbit camera.
-                    camera.yAngle -= deltaRotate;
-                    break;
-                case ('A'):
-                    // Orbit camera.
-                    camera.zAngle -= deltaRotate;
-                    break;
-                case ('S'):
-                    // Orbit camera.
-                    camera.yAngle += deltaRotate;
-                    break;
-                case ('D'):
-                    // Orbit camera.
-                    camera.zAngle += deltaRotate;
-                    break;
-            }
+            models = [];
+            // fill-style
+            let fs = "fillwireframe";
+            createModel(RecursiveSphere.createShape(tesNumber), fs);
 
             // Render the scene again on any key pressed.
             render();
-        };
+        }
     }
 
     function calculateCameraOrbit() {
@@ -319,7 +299,7 @@ let App = (function () {
         let wireframe = (model.fillstyle.search(/wireframe/) != -1);
         if (wireframe) {
             gl.disableVertexAttribArray(prog.normalAttrib);
-            gl.vertexAttrib3f(prog.normalAttrib, 0, 0, 0);
+            gl.vertexAttrib3f(prog.normalAttrib, 1, 0, 0);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.iboLines);
             gl.drawElements(gl.LINES, model.iboLines.numberOfElements,
                 gl.UNSIGNED_SHORT, 0);

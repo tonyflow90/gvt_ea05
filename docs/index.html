@@ -20,10 +20,20 @@
     <h1>Aufgabe 5 - Kamerabewegung </h1>
     </br>
     <h1>Teil 1 - Szene aus zwei Grundkörpern (interakitv) </h1>
+    <p>
+        mit w (Kamera nach oben) & s (kamera nach unten) kann die Kamera vertikal bewegt werden
+        </br>
+        mit a (Kamera nach links) & d (kamera nach rechts) kann die Kamera horizontal bewegt werden
+    </p>
     <canvas id="canvas1">
         Your browser does not support HTML5
     </canvas>
-    <h1>Teil 2 - Rekursives Kugel Modell </h1>
+    <h1>Teil 2 - Rekursives Kugel Model </h1>
+    <p>Tessellation:</p>
+    <form>
+        <input id="tessellationSlider" type="range" name="amountRange" min="1" max="6" value="1" oninput="this.form.amountInput.value=this.value" />
+        <input id="tessellationInput" type="number" name="amountInput" min="1" max="6" value="1" oninput="this.form.amountRange.value=this.value" />
+    </form>
     <canvas id="canvas2">
         Your browser does not support HTML5
     </canvas>

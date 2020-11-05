@@ -38,9 +38,9 @@ let createConeShape = () => {
             var nx = Math.cos(u);
             var ny = Math.sin(v);
             var nz = 0.5;
-            normals[iVertex * 3] = 0;
-            normals[iVertex * 3 + 1] = 1;
-            normals[iVertex * 3 + 2] = 0;
+            normals[iVertex * 3] = nx;
+            normals[iVertex * 3 + 1] = ny;
+            normals[iVertex * 3 + 2] = nz;
 
 
             // Set index.
